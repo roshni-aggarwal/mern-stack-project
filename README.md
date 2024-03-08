@@ -8,7 +8,7 @@ https://github.com/enacton-tech/mern-stack-task
 
 ### Video Explanation
 
-https://app.usebubbles.com/5Bggxar2FVBpJS2xgeeUy4/mern-stack-task
+https://app.usebubbles.com/kG9NjR5kqBCssXm1yA5dZt/mernstack-interview-task-walkthrough
 
 ### Setting Up the Project
 
@@ -20,43 +20,39 @@ To set up the project locally, follow these steps:
 4. Run `npm install --force`.
 5. Start the project using `npm run dev`.
 6. Access the NextJS website at http://localhost:3000.
+7. Setup the database, You would need mysql and workbench for the database. You can get it from here: https://dev.mysql.com/downloads/installer. To Import data in do refer to this document: https://dev.mysql.com/doc/workbench/en/wb-admin-export-import-management.html
 
 ### Requirements
 
+#### Project Setup
+
 1. **Project Setup**: Ensure proper project setup as per the provided instructions.
+
+#### Pagination for products
 
 2. **Main Section**: Display a paginated list of product in the main section.
 
+#### Product Sorting and Filtering
+
 3. **Product Sorting**: Implement options for sorting products based on price, creation date (created_at), and rating.
-
 4. **Brand Filter**: Enable product filtering by the chosen brand and emphasize the selected brands within the respective tab.
-
 5. **Category Filter**: Allow product filtering by the selected category and highlight the chosen category within its designated tab.
-
 6. **Price Range Filter**: Provide the ability to filter products based on the selected price range and highlight the chosen range within its dedicated tab.
-
 7. **Occasion Filter**: Enable product filtering based on the selected occasion and highlight the chosen occasion within its specific tab.
-
 8. **Discount Filter**: Implement product filtering based on the selected discount and highlight the chosen discount within its dedicated tab.
-
 9. **URL Parameters**: Store all filter and sort options in the URL parameters to replicate the user's browsing state when sharing URLs.
 
-10. **Edit Product**: Allow users to modify specific product details.
+#### Product Operations (Create/Edit/Delete)
 
-11. **Delete Product**: Provide the functionality to remove a particular product from the list.
-
-### Links
-
-3. **Recording Video**: [Record with Bubbles](https://app.usebubbles.com/)
+10. **Create Product**: Allow users to crete product.
+11. **Edit Product**: Allow users to modify specific product details.
+12. **Delete Product**: Provide the functionality to remove a particular product from the list.
 
 ### Delivery Expectations
 
 1. **Code Repository**: Push the code to a public GitHub repository.
-
 2. **Documentation**: Provide well-documented code with a comprehensive README file.
-
 3. **Setup Instructions**: Include clear instructions on how to set up and run the project.
-
 4. **Application Demo**: Record a video demonstrating the application's functionality.
 
 ### Evaluation Criteria
