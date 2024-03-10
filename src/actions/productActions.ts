@@ -13,12 +13,12 @@ export async function getProducts(pageNo = 1, pageSize = DEFAULT_PAGE_SIZE, sort
   try {
     let products;
     let dbQuery = db.selectFrom("products").selectAll("products");
-    console.log('brands', brand)
+    // console.log('brands', brand)
     
     if (brand !== '') { 
       const brandIds = brand.split(',').map((id: Number) => parseInt(id)).filter((id: Number) => !isNaN(id));
-      dbQuery = dbQuery.where(`CONTAINS('brands', ${brandIds})`)
-    }
+      dbQuery = dbQuery.where(sql`CONTAINS(JSON.parse('brands'), ${brandIds})`)
+    } 
 
     if (categoryId !== '') {
       const categoryIds = categoryId.split(',').map((id: Number) => parseInt(id)).filter((id: Number) => !isNaN(id));
@@ -36,16 +36,16 @@ export async function getProducts(pageNo = 1, pageSize = DEFAULT_PAGE_SIZE, sort
       dbQuery = dbQuery.where('gender', '=', gender);
     }
 
-    // if (occasion !== '') {
-    //   const occasionArr = occasion.split(',');
-    //   dbQuery = dbQuery.where((eb) => {
-    //     occasionArr.forEach(occ =>
-    //       {
-    //         eb.or(sql`FIND_IN_SET(?, occasion'') > 0`, occ);
-    //       }
-    //     );
-    //   });
-    // }
+    if (occasion !== '') {
+      const occasionArr = occasion.split(',');
+      dbQuery = dbQuery.where((eb) => {
+        occasionArr.forEach(occ =>
+          {
+            eb.or(sql`FIND_IN_SET(?, occasion'') > 0`, occ);
+          }
+        );
+      });
+    }
 
     if (discount !== '') {
       const discountArr = discount.split('-').map(dis => parseFloat(dis));

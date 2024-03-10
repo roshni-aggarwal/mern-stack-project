@@ -54,14 +54,12 @@ function AddProduct() {
         discount: parseFloat(values.discount), 
         colors: values.colors,
         gender: values.gender,
-        brands: values.brands.map(brand => brand.value),
+        brands: JSON.stringify(values.brands.map(brand => brand.value)),
         occasion: values.occasion.map(occ => occ.value).join(','),
         created_at: new Date(),
         updated_at: new Date(),
         image_url : values.image_url
       }
-
-      console.log('payload', productPayload)
 
       const categories = values.categories.map(cat => cat.value)
       const { error }= await addProduct(productPayload, categories);

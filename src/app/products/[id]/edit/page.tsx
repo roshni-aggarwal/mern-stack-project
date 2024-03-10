@@ -11,6 +11,7 @@ import {
   getProductCategories,
   updateProduct,
   updateProductCategories,
+  editProduct,
 } from "@/actions/productActions";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -70,7 +71,7 @@ function EditProduct({ params }: { params: { id: string } }) {
         discount: parseFloat(values.discount), 
         colors: values.colors,
         gender: values.gender,
-        brands: values.brands.map(brand => brand.value),
+        brands: JSON.stringify(values.brands.map(brand => brand.value)),
         occasion: values.occasion.map(occ => occ.value).join(','),
         updated_at: new Date(),
         image_url : values.image_url
@@ -82,11 +83,11 @@ function EditProduct({ params }: { params: { id: string } }) {
       if (error) {
         toast.error(error);
         return;
+      } else {
+        toast.success("product updated successfully");
+        router.push('/products')
       }
-  
-      toast.success("product updated successfully");
-      resetForm()
-    },
+    }
   });
 
   // throw new Error("Function not implemented.");
@@ -153,7 +154,7 @@ function EditProduct({ params }: { params: { id: string } }) {
         gender: productArr.gender,
         occasion: initialOccasion,
         rating: +productArr.rating,
-        image_url: "",
+        image_url: productArr.image_url,
       };
       setValues(product);
       setInitialValues(product);
