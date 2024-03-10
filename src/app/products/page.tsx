@@ -12,12 +12,19 @@ export default async function Products({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
-}) {
-  const { page = 1, pageSize = DEFAULT_PAGE_SIZE } = searchParams as any;
+  }) {
+  const { page = 1, pageSize = DEFAULT_PAGE_SIZE, sortBy='', brand='', categoryId='',priceRangeTo='', gender='', occasion='', discount='' } = searchParams as any;
 
   const { products, lastPage, numOfResultsOnCurPage } = await getProducts(
     +page,
-    +pageSize
+    +pageSize,
+    sortBy,
+    brand,
+    categoryId,
+    priceRangeTo,
+    gender, 
+    occasion,
+    discount
   );
 
   const brands = await getBrands();

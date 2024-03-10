@@ -16,6 +16,18 @@ function SortBy() {
   const params = useSearchParams();
   const searchParams = new URLSearchParams(params);
 
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const sortValue = e.target.value;
+    searchParams.delete('page')
+    searchParams.delete('pageSize')
+    if (sortValue == '') {
+      searchParams.delete('sortBy')
+    } else {
+      searchParams.set('sortBy', sortValue);
+    }
+    router.push(`/products?${searchParams.toString()}`);
+  }
+
   return (
     <div className="text-black flex gap-2">
       <p className="text-white text-lg">Sort By</p>
@@ -24,7 +36,7 @@ function SortBy() {
         id="sorting"
         value={String(searchParams.get("sortBy"))}
         onChange={(e) => {
-          alert("Please update the code.");
+          handleSort(e)
         }}
       >
         <option value="">None</option>

@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Select from "react-select";
 import { MultiSelect } from "react-multi-select-component";
 import "rc-slider/assets/index.css";
@@ -125,28 +125,60 @@ function Filter({ categories, brands }) {
     }
   }, [sliderValue]);
 
-  function handleBrandsSelect(e) {
-    alert("Please update the code.");
+  function handleBrandsSelect(e: any[]) {
+    searchParams.delete('page')
+    searchParams.delete('pageSize')
+    searchParams.set('brand', e.map(brand => brand.value).join(','))
+    router.push(`/products?${searchParams.toString()}`);
   }
 
-  function handleCategoriesSelected(e) {
-    alert("Please update the code.");
+  function handleCategoriesSelected(e: any[]) {
+    setCategoriesSelected(e)
+    searchParams.delete('page')
+    searchParams.delete('pageSize')
+    if (e.length !== 0) {
+      searchParams.set('categoryId', e.map(category => category.value).join(','))
+    } else {
+      searchParams.delete('categoryId')
+    }
+    router.push(`/products?${searchParams.toString()}`);
   }
 
-  function handleSlider(e) {
-    alert("Please update the code.");
+  function handleSlider(e: React.ChangeEvent<HTMLInputElement>) {
+    setSliderChanged(true)
+    setSliderValue(e.target.value)
   }
 
-  const handleGenderChange = (e) => {
-    alert("Please update the code.");
+  const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    searchParams.delete('page')
+    searchParams.delete('pageSize')
+    setSelectedGender(e.target.value)
+    if (e.target.value !== '') { searchParams.set('gender', e.target.value) } else {
+      searchParams.delete('gender')
+    }
+    router.push(`/products?${searchParams.toString()}`);
   };
 
-  function handleOccasions(e) {
-    alert("Please update the code.");
+  function handleOccasions(e: any[]) {
+    searchParams.delete('page')
+    searchParams.delete('pageSize')
+    if (e.length !== 0) {
+      searchParams.set('occasion', e.map(occ => occ.value).join(","))
+    } else {
+      searchParams.delete('occasion')
+    }
+    router.push(`/products?${searchParams.toString()}`);
   }
 
-  function handleDiscount(e) {
-    alert("Please update the code.");
+  function handleDiscount(e: Record<string, any>) {
+    searchParams.delete('page')
+    searchParams.delete('pageSize')
+    if (e.value == '') {
+      searchParams.delete('discount')
+    } else {
+      searchParams.set('discount', e.value);
+    }
+    router.push(`/products?${searchParams.toString()}`);
   }
 
   // function handleClearAll() {
@@ -208,7 +240,7 @@ function Filter({ categories, brands }) {
           name="gender"
           value=""
           checked={selectedGender === ""}
-          onChange={handleGenderChange}
+          onChange={e => handleGenderChange(e)}
         />
         <label htmlFor="none">None</label> <br />
         <input
@@ -217,7 +249,7 @@ function Filter({ categories, brands }) {
           name="gender"
           value="men"
           checked={selectedGender === "men"}
-          onChange={handleGenderChange}
+          onChange={e => handleGenderChange(e)}
         />
         <label htmlFor="men">Men</label>
         <br />
@@ -227,7 +259,7 @@ function Filter({ categories, brands }) {
           name="gender"
           value="women"
           checked={selectedGender === "women"}
-          onChange={handleGenderChange}
+          onChange={e => handleGenderChange(e)}
         />
         <label htmlFor="women">Women</label>
         <br />
@@ -237,7 +269,7 @@ function Filter({ categories, brands }) {
           name="gender"
           value="boy"
           checked={selectedGender === "boy"}
-          onChange={handleGenderChange}
+          onChange={e => handleGenderChange(e)}
         />
         <label htmlFor="boy">Boy</label>
         <br />
@@ -247,7 +279,7 @@ function Filter({ categories, brands }) {
           name="gender"
           value="girl"
           checked={selectedGender === "girl"}
-          onChange={handleGenderChange}
+          onChange={e => handleGenderChange(e)}
         />
         <label htmlFor="girl">Girl</label>
       </div>

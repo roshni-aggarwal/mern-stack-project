@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { occasionOptions } from "../../../../constant";
 import Select from "react-select";
+import { toast } from "react-toastify";
+import { addProduct } from "@/actions/productActions";
+import { InsertProductCategories, InsertProducts } from "@/types/index";
 
 function AddProduct() {
   const [brandsOption, setBrandsOption] = useState([]);
@@ -42,7 +45,34 @@ function AddProduct() {
     validationSchema: basicSchema,
 
     onSubmit: async (values: any, actions) => {
-      alert("Please Update the Code");
+      const productPayload: InsertProducts = {
+        name: values.name,
+        description: values.description,
+        price: values.old_price - (values.old_price * values.discount / 100),
+        rating: values.rating,
+        old_price: values.old_price,
+        discount: parseFloat(values.discount), 
+        colors: values.colors,
+        gender: values.gender,
+        brands: values.brands.map(brand => brand.value),
+        occasion: values.occasion.map(occ => occ.value).join(','),
+        created_at: new Date(),
+        updated_at: new Date(),
+        image_url : values.image_url
+      }
+
+      console.log('payload', productPayload)
+
+      const categories = values.categories.map(cat => cat.value)
+      const { error }= await addProduct(productPayload, categories);
+  
+      if (error) {
+        toast.error(error);
+        return;
+      }
+  
+      toast.success("product added successfully");
+      resetForm()
     },
   });
 

@@ -61,7 +61,31 @@ function EditProduct({ params }: { params: { id: string } }) {
     validationSchema: basicSchema,
 
     onSubmit: async (values, actions) => {
-      alert("Please update the code.");
+      const productPayload: UpdateProducts = {
+        name: values.name,
+        description: values.description,
+        price: values.old_price - (values.old_price * values.discount / 100),
+        rating: values.rating,
+        old_price: values.old_price,
+        discount: parseFloat(values.discount), 
+        colors: values.colors,
+        gender: values.gender,
+        brands: values.brands.map(brand => brand.value),
+        occasion: values.occasion.map(occ => occ.value).join(','),
+        updated_at: new Date(),
+        image_url : values.image_url
+      }
+
+      const categories = values.categories.map(cat => cat.value)
+      const { error }= await editProduct(productPayload, categories, Number(id));
+  
+      if (error) {
+        toast.error(error);
+        return;
+      }
+  
+      toast.success("product updated successfully");
+      resetForm()
     },
   });
 
